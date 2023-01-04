@@ -3,15 +3,19 @@ from googleapiclient.discovery import build
 import config
 
 
-def p(str):
-    """
-    for debug
+def p(str) -> None:
+    """整形してprint
+
+    Args:
+        mixed: 表示する内容
     """
     pprint(str)
 
-def get_search_result():
-    """
-    検索を実行 (30件しか取れない、、)
+def get_search_result() -> list:
+    """検索を実行 (30件しか取れない、、)
+
+    Returns:
+        list: 検索結果
     """
     service = build(
         'customsearch', 'v1', developerKey = config.API_KEY
@@ -45,9 +49,14 @@ def get_search_result():
     service.close()
     return search_result
 
-def get_urls(search_result):
-    """
-    URLだけ欲しい
+def get_urls(search_result: list) -> list:
+    """クリックするところのURLだけ欲しい
+
+    Args:
+        list: 検索結果
+
+    Returns:
+        list: URL一覧
     """
     urls = []
     for sr in search_result:
@@ -60,4 +69,3 @@ if __name__ == '__main__':
     search_result = get_search_result()
     urls = get_urls(search_result)
     p(urls)
-
