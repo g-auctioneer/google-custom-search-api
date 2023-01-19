@@ -35,7 +35,8 @@ def get_search_result() -> list:
                     lr = 'lang_ja',
                     start = start_index,
                     num = get_num,
-                    exactTerms = config.EXACT_TERMS
+                    exactTerms = config.EXACT_TERMS,
+                    dateRestrict = 'w10'  # 過去10週間
                 )
                 .execute()
             )
@@ -68,4 +69,10 @@ def get_urls(search_result: list) -> list:
 if __name__ == '__main__':
     search_result = get_search_result()
     urls = get_urls(search_result)
-    p(urls)
+
+    for url in urls:
+        for ignore_word in config.IGNORE_WORDS:
+            if ignore_word in url:
+                break
+        else:
+            p(url)
